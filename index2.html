@@ -162,8 +162,8 @@
         margin: 20px;
         perspective: 1000px;
         border-radius: 10px;
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px,
-          rgba(0, 0, 0, 0.19) 0px 6px 12px;
+        /*box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px,
+          rgba(0, 0, 0, 0.19) 0px 6px 12px;*/
       }
 
       .flip-card-inner {
@@ -193,14 +193,14 @@
         justify-content: center;
         align-items: center;
         padding: 20px;
-        box-sizing: border-box;
-        /* Asegura que el padding no afecte el tamaño */
+        box-sizing: border-box;        
       }
 
       .flip-card-front {
         background-color: #ffffff;
         color: #333;
-        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px,
+        rgba(0, 0, 0, 0.19) 0px 6px 12px;
       }
 
       .flip-card-back {
@@ -278,7 +278,8 @@
       }
 
       #scrollToTopButton {
-        background: url("/static/archivos/anim/1663176/2012790/backtop.png")
+        /*background: url("/static/archivos/anim/1663176/2012790/top.png")*/
+        background: url("top.png")
           no-repeat center;
         border: none;
         border-radius: 50%;
@@ -399,10 +400,7 @@
     <main class="container">
       <div id="resultado" class="card-container"></div>
       <button id="scrollToTopButton" onclick="scrollToTop()">
-        <img
-          src="/static/archivos/anim/1663176/2012790/backtop.png"
-          alt="Scroll to top"
-        />
+        
       </button>
     </main>
 
