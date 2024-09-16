@@ -366,9 +366,11 @@
   @media (max-width: 768px) {
     /* Mobile layout */
     .navbar-buttons {
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
+        flex-direction: column;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    gap: 10px;
     }
     .button-55 {
       width: 100%;
@@ -386,7 +388,7 @@
   @media (max-width: 480px) {
     /* Smaller mobile layout */
     .navbar {
-      flex-direction: column;
+      flex-direction: row;
     }
     .button-55 {
       font-size: 14px; /* Adjust font size for smaller screens */
