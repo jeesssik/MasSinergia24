@@ -346,6 +346,60 @@
           align-items: center;
         }
       }
+
+      @media (max-width: 1024px) {
+    /* Tablet layout */
+    .navbar-buttons {
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    .button-55 {
+      width: 100%; /* Full width for buttons */
+      text-align: center;
+    }
+    .flip-card {
+      max-width: 48%; /* Two cards per row on tablets */
+    }
+  }
+
+  @media (max-width: 768px) {
+    /* Mobile layout */
+    .navbar-buttons {
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    .button-55 {
+      width: 100%;
+      text-align: center;
+    }
+    .flip-card {
+      max-width: 100%; /* Full width for cards on mobile */
+    }
+    #buscador {
+      width: 100%;
+      margin-top: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    /* Smaller mobile layout */
+    .navbar {
+      flex-direction: column;
+    }
+    .button-55 {
+      font-size: 14px; /* Adjust font size for smaller screens */
+      padding: 8px 15px;
+    }
+    .flip-card {
+      height: auto;
+    }
+    .girar-button {
+      bottom: 5px;
+      right: 5px;
+    }
+  }
     </style>
   </head>
 
