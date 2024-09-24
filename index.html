@@ -94,11 +94,11 @@
               background-color: #007bff;
               color: #fff;
             }
-            .btn-servicio {
+            .btn-servicios {
               background-color: #a226b8; /* Azul */
               color: white;
             }
-            .btn-servicio:hover {
+            .btn-servicios:hover {
               background-color: #712080;
               color: #fff;
             }
@@ -152,7 +152,33 @@
               /* Espacio entre tarjetas */
               justify-content: center;
             }
+            
+            .Web .flip-card-front {
+              box-shadow: rgba(101, 156, 211, 0.422) 0px 4px 6px,
+              rgba(57, 12, 154, 0.455) 0px 6px 12px;
+            }
 
+            .Servicio .flip-card-front {
+              box-shadow: rgba(183, 101, 211, 0.332) 0px 4px 6px,
+              rgba(212, 130, 198, 0.359) 0px 6px 12px;
+            }
+            .Bien .flip-card-front {
+              box-shadow: rgba(39, 230, 93, 0.186) 0px 4px 6px,
+              rgba(78, 191, 91, 0.663) 0px 6px 12px;
+            }
+            .App .flip-card-front {
+              box-shadow: rgba(218, 84, 223, 0.313) 0px 4px 6px,
+              rgba(203, 120, 206, 0.663) 0px 6px 12px;
+            }
+            .flip-card-front .SinergizadoC {
+              box-shadow: rgba(117, 117, 93, 0.587) 0px 4px 6px,
+              rgba(160, 165, 22, 0.405) 0px 6px 12px;
+            }
+           .Otro .flip-card-front {
+              box-shadow: rgba(39, 230, 93, 0.413) 0px 4px 6px,
+              rgba(78, 191, 91, 0.663) 0px 6px 12px;
+            }
+          
             /* Estilos para tarjetas */
             .flip-card {
               background-color: transparent;
@@ -4375,7 +4401,7 @@
                         ${truncateDescription(item.Descripcion, 10, item)}
 
                        <p ><b>Integrantes:</b>  ${item.Integrantes}
-                        <p ><b>ODS:</b>  ${item.ODS} <br>
+                        <br ><b>ODS:</b>  ${item.ODS} <br>
                          <b>Categoría:</b>  ${item.Categoria}
                        <br><b>Tipo de Producción</b>: ${item.superTags}</p>
                         <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
@@ -4446,7 +4472,7 @@
                         <h3>${item.Nombre}</h3>
                         ${truncateDescription(item.Descripcion, 10, item)}
 
-                       <p ><b>Integrantes:</b></p>  ${
+                       <p ><b>Integrantes:</b><br>  ${
                          item.Integrantes
                        }<b>ODS:</b>  ${item.ODS}<br>
                          <b>Tpo de Producción</b>: ${item.superTags}</p>
@@ -4517,7 +4543,7 @@
                                     <p ><b>Integrantes:</b>  ${
                                       item.Integrantes
                                     } 
-                                      <p ><b>ODS:</b>  ${item.ODS} <br>
+                                      <br ><b>ODS:</b>  ${item.ODS} <br>
                                     <b>Categoría:</b>  ${item.Categoria}<br> <b>Tipo de Producción:</b> ${
             item.superTags
           }</p>
@@ -4658,7 +4684,7 @@
                             
                               <p ><b>Integrantes:</b>  ${item.Integrantes}
                             
-                            <br><b>Categoria:</b> ${item.Categoria}</p>
+                            <b>Categoria:</b> ${item.Categoria}</p>
                             <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
                         </div>
                     </div>
