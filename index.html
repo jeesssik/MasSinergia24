@@ -345,7 +345,7 @@
               flex-direction: column;
           align-items: center;
           display: grid;
-          grid-template-columns: repeat(6, auto); /* 3 columnas */
+          grid-template-columns: repeat(6, auto); /* 6 columnas */
           gap: 10px;
           }
           .button-55 {
@@ -362,6 +362,10 @@
         }
 
         @media (max-width: 768px) {
+          /*elimino el display flex del navbar*/
+          .navbar {
+            justify-content: space-around;
+          }
           /* Mobile layout */
           .navbar-buttons {
               flex-direction: column;
@@ -387,6 +391,9 @@
         }
 
         @media (max-width: 480px) {
+          .navbar {
+            justify-content: space-around;
+          }
           /* Smaller mobile layout */
           .navbar-buttons {
               flex-direction: column;
