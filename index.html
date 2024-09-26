@@ -61,7 +61,6 @@
             transition: all 0.3s ease;
         }
 
-        |
 
         /* Colores específicos para cada botón */
         .btn-sinergizado {
@@ -418,6 +417,7 @@
                     margin-top: 15px;
                 }
             }
+        }
 
             @media (max-width: 768px) {
 
@@ -551,6 +551,362 @@
         }
 
         // Simula los datos del archivo JSON
+       
+        // Función para mostrar datos de una categoría
+
+        function mostrarCategoria(categoria) {
+            var resultadoDiv = document.getElementById("resultado");
+
+            resultadoDiv.innerHTML = ""; // Limpiar contenido anterior
+
+            var categoriaData = datos.filter(function (item) {
+                return item.Categoria === categoria;
+            });
+
+            if (categoriaData.length > 0) {
+                categoriaData.forEach(function (item) {
+                    var card = document.createElement("div");
+                    card.classList.add("flip-card");
+                    card.innerHTML = `
+                <div class="flip-card-inner ${item.Categoria}">
+                    <div class="flip-card-front ">
+                        <div >
+                            <img src='https://campus.ort.edu.ar/static/tmp/jquery-file-upload/${item.id}.png'  alt="Avatar">
+                        </div>
+                        <h3>${item.Nombre}</h3>
+                        <p>${item.Slogan.slice(0, 80)}</p>
+                        <button class="girar-button" onclick="girarTarjeta(this)">+ Detalles</button>
+                        ${Sinergizado(item)}
+                        </div>
+                    <div class="flip-card-back ${item.Categoria}">
+                        <h3>${item.Nombre}</h3>
+                        ${truncateDescription(item.Descripcion, 10, item)}
+
+                       <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
+                        <b>ODS:</b>  ${item.ODS} <br>
+                         <b>Categoría:</b>  ${item.Categoria}
+                       ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
+                        <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
+                    </div>
+                </div>
+            `;
+                    resultadoDiv.appendChild(card);
+                });
+
+                // Cambiar la clase "activo" del botón seleccionado
+                var botones = document.querySelectorAll(".botones-categorias button");
+                if (categoria == "web") {
+                    id = "Web";
+                }
+                if (categoria == "Servicio") {
+                    id = "servicio";
+                }
+                if (categoria == "App") {
+                    id = "App";
+                }
+                if (categoria == "Bien tangible") {
+                    id = "bien-tangible";
+                }
+
+                botones.forEach(function (boton) {
+                    boton.classList.remove("button-" + boton.id);
+                    boton.classList.remove("Todos");
+                    boton.classList.remove("SinergizadoC");
+                });
+                // Agrega la clase correspondiente al botón clicleado
+                document.getElementById(id).classList.add("button-" + id);
+            } else {
+                resultadoDiv.innerHTML =
+                    "<p>No hay datos disponibles para esta categoría.</p>";
+            }
+        }
+
+        // Función para mostrar Sinergizados
+        function mostrarSin() {
+            var resultadoDiv = document.getElementById("resultado");
+            console.log(resultadoDiv);
+            resultadoDiv.innerHTML = ""; // Limpiar contenido anterior
+
+            // Filtrar datos por sinergizado
+            var sinergizzados = datos.filter(function (item) {
+                return item.sinergizado == "TRUE";
+            });
+
+            if (sinergizzados.length > 0) {
+                sinergizzados.forEach(function (item) {
+                    var card = document.createElement("div");
+                    card.classList.add("flip-card");
+
+                    card.innerHTML = `
+                <div class="flip-card-inner">
+                    <div class="flip-card-front SinergizadoC">
+                        <div >
+                            <img src='https://campus.ort.edu.ar/static/tmp/jquery-file-upload/'+item.id+'.png'  alt="Avatar">
+                        </div>
+                        <h3>${item.Nombre}</h3>
+                        <p>${item.Slogan.slice(0, 80)}</p>
+                        <button class="girar-button" onclick="girarTarjeta(this)">+ Detalles</button>
+                        ${Sinergizado(item)}
+                        </div>
+                    <div class="flip-card-back ${item.Categoria}">
+                        <h3>${item.Nombre}</h3>
+                        ${truncateDescription(item.Descripcion, 10, item)}
+
+                       <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
+                        <b>ODS:</b>  ${item.ODS}
+                         ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
+                        <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
+                    </div>
+                </div>
+            `;
+                    resultadoDiv.appendChild(card);
+                });
+
+                var botones = document.querySelectorAll(".botones-categorias button");
+
+                id = "SinergizadosC";
+
+                botones.forEach(function (boton) {
+                    boton.classList.remove("Todos");
+                    boton.classList.remove("button-Servicio");
+                    boton.classList.remove("button-web");
+                    boton.classList.remove("button-App");
+                    boton.classList.remove("button-bien-tangible");
+
+                    if (boton.id == "Sinergizado") {
+                        boton.classList.add("SinergizadoC");
+                    }
+                });
+            }
+        }
+
+        // Función para mostrar todos los proyectos
+        function mostrarTodos() {
+            var botones = document.querySelectorAll(".botones-categorias button");
+            botones.forEach(function (boton) {
+                boton.className = "button-55";
+            });
+            var botonSeleccionado = document.getElementById("Todos");
+            if (botonSeleccionado) {
+                botonSeleccionado.classList.add("Todos");
+            }
+            var resultadoDiv = document.getElementById("resultado");
+            resultadoDiv.innerHTML = ""; // Limpiar contenido anterior
+
+            datos.forEach(function (item) {
+                var card = document.createElement("div");
+
+                card.classList.add("flip-card");
+                card.innerHTML = `
+                <div class="flip-card-inner ${item.Categoria}">
+                        <div class="flip-card-front">
+                            <div >
+                              <img src='https://campus.ort.edu.ar/static/tmp/jquery-file-upload/${item.id}.png'  alt="Avatar">
+                            </div>
+                        <h3>${item.Nombre}</h3>
+                        <p>${item.Slogan.slice(0, 80)}</p>
+                        <button class="girar-button" onclick="girarTarjeta(this)">+ Detalles</button>
+                        ${Sinergizado(item)}
+                        </div>
+                        <div class="flip-card-back .flip-card ${item.Categoria}">
+                                <h3>${item.Nombre}</h3>
+                                   ${truncateDescription(item.Descripcion, 10, item)}
+                                    <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
+                                      <b>ODS:</b>  ${item.ODS} <br>
+                                    <b>Categoría:</b>  ${item.Categoria}<br> 
+                                    ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
+                                    
+                    </p>
+                              
+                                <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
+                        </div>
+                        
+                    </div>
+                `;
+                resultadoDiv.appendChild(card);
+            });
+        }
+
+        //// truncar descripciones
+        function truncateDescription(description, wordCount, item) {
+            if (description.length > 100) {
+                const words = description.split(" ");
+                if (words.length <= wordCount) {
+                    return `<pid="descCard"><b>Descripción:</b> ${description}</p><br>`;
+                }
+                let truncatedWords = words.slice(0, wordCount);
+                truncatedWords = truncatedWords.join(" ");
+
+                return `<p onclick="mostrarDescripcionCompleta('${description}')" title="leer +" id="descCard"><b>Descripción:</b> ${truncatedWords} ...(+)</p>
+        
+        `;
+                //   return `<p>${truncatedWords}  ...</p><button class="leer-mas-button" onclick="mostrarDescripcionCompleta('${description}')">Leer más</button>
+            } else {
+                return `<p id="descCard"><b>Descripción:</b> ${description}</p><br>`;
+            }
+        }
+
+        function truncateData(tipoProduccion, char, cantidad, txt) {
+            const words = tipoProduccion.split(char);
+            //const truncatedWord = [words[0], words[1]] ; // Truncamos y quitamos posibles espacios en blanco
+
+            if (words.length >= 2) {
+                // Si no hay un guion, mostramos solo la primera palabra
+                return `<b onclick="mostrarDescripcionCompleta('${tipoProduccion}')">${txt}:</b> ${words[0]}, ${words[1]}</p>`;
+            } else {
+                return `<b>${txt}:</b> ${tipoProduccion} </p>`;
+            }
+        }
+
+        // Crea el modal cuando se carga la página
+
+        var modal = document.createElement("div");
+        modal.className = "modal";
+        modal.style.display = "none"; // Inicialmente oculto
+
+        var modalContent = document.createElement("div");
+        modalContent.className = "modal-content";
+
+        var closeButton = document.createElement("span");
+        closeButton.className = "close";
+        closeButton.innerHTML = "&times;";
+
+        var modalParagraph = document.createElement("p");
+        modalParagraph.id = "modalParagraph";
+
+        modalContent.appendChild(closeButton);
+        modalContent.appendChild(modalParagraph);
+        modal.appendChild(modalContent);
+
+        document.body.appendChild(modal);
+
+        // Función para mostrar el modal con una descripción específica
+
+        // Función para cerrar el modal
+        closeButton.onclick = function () {
+            modal.style.display = "none";
+        };
+
+        // Cierra el modal si el usuario hace clic fuera de él
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        function mostrarDescripcionCompleta(descripcion) {
+            modal.style.display = "block";
+            modal.style.alignItems = "center";
+            modal.style.display = "flex";
+            modal.style.justifyContent = "center";
+            modalParagraph.textContent = descripcion;
+        }
+
+        /**** fin modal****/
+
+        // Mostrar ico sinergizados
+        function Sinergizado(item) {
+            if (item.Sinergizado == "TRUE") {
+                return `<div class="syn-image" title="Sinergizado"></div>`;
+            } else {
+                return "";
+            }
+        }
+        //buscar con el input
+        const buscador = document.getElementById("buscador");
+
+        buscador.addEventListener("input", function () {
+            var botones = document.querySelectorAll(".botones-categorias button");
+            botones.forEach(function (boton) {
+                boton.className = "button-55";
+            });
+
+            const terminoBusqueda = buscador.value.trim().toLowerCase();
+            filtrarProyectos(terminoBusqueda);
+            buscador.addEventListener("blur", function () {
+                buscador.value = "";
+            });
+        });
+
+        function filtrarProyectos(termino) {
+            const resultadoDiv = document.getElementById("resultado");
+            resultadoDiv.innerHTML = "";
+
+            const proyectosFiltrados = datos.filter(function (proyecto) {
+                const titulo = proyecto.Nombre.toLowerCase();
+                const descripcion = proyecto.Descripcion.toLowerCase();
+                const integrantes = proyecto.Integrantes.toLowerCase();
+                return (
+                    titulo.includes(termino) ||
+                    descripcion.includes(termino) ||
+                    integrantes.includes(termino)
+                );
+            });
+
+            if (proyectosFiltrados.length > 0) {
+                proyectosFiltrados.forEach(function (item) {
+                    var card = document.createElement("div");
+                    card.classList.add("flip-card");
+                    card.innerHTML = `
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front ${item.Categoria}">
+                            <div>
+                              <img src='https://campus.ort.edu.ar/static/tmp/jquery-file-upload/${item.Id}.png'  alt="Avatar">
+                            </div>
+                        <h3>${item.Nombre}</h3>
+                        <p>${item.Slogan.slice(0, 80)}</p>
+                        <button class="girar-button" onclick="girarTarjeta(this)">+ Detalles</button>
+                        ${Sinergizado(item)}
+                        </div>
+                        <div class="flip-card-back ${item.Categoria}">
+                            <h3>${item.Nombre}</h3>
+                              ${truncateDescription(item.Descripcion, 10, item)}
+                            ${truncateData(item.Integrantes, ',', 2, 'Integrantes')}<br>
+                             
+                            <b>Categoria:</b> ${item.Categoria}</p>
+                            <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
+                        </div>
+                    </div>
+                `;
+                    resultadoDiv.appendChild(card);
+                });
+            } else {
+                resultadoDiv.innerHTML = "<p>No se encontraron proyectos.</p>";
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        }
+        window.addEventListener("scroll", function () {
+            var scrollToTopButton = document.getElementById("scrollToTopButton");
+
+            if (window.scrollY > 300) {
+                scrollToTopButton.style.display = "block";
+            } else {
+                scrollToTopButton.style.display = "none";
+            }
+        });
+
+        (function (h, o, t, j, a, r) {
+            h.hj =
+                h.hj ||
+                function () {
+                    (h.hj.q = h.hj.q || []).push(arguments);
+                };
+            h._hjSettings = { hjid: 3697742, hjsv: 6 };
+            a = o.getElementsByTagName("head")[0];
+            r = o.createElement("script");
+            r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+
+
+
         var datos = [
             {
                 Nombre: "Abejas violetas",
@@ -4400,362 +4756,7 @@
             },
         ];
 
-        // Función para mostrar datos de una categoría
 
-        function mostrarCategoria(categoria) {
-            var resultadoDiv = document.getElementById("resultado");
-
-            resultadoDiv.innerHTML = ""; // Limpiar contenido anterior
-
-            var categoriaData = datos.filter(function (item) {
-                return item.Categoria === categoria;
-            });
-
-            if (categoriaData.length > 0) {
-                categoriaData.forEach(function (item) {
-                    var card = document.createElement("div");
-                    card.classList.add("flip-card");
-                    card.innerHTML = `
-                <div class="flip-card-inner ${item.Categoria}">
-                    <div class="flip-card-front ">
-                        <div >
-                            <img src="https://https://campus.ort.edu.ar/static/tmp/jquery-file-upload/thumbnail/${item.id
-                        }.png"  alt="Avatar">
-                        </div>
-                        <h3>${item.Nombre}</h3>
-                        <p>${item.Slogan.slice(0, 80)}</p>
-                        <button class="girar-button" onclick="girarTarjeta(this)">+ Detalles</button>
-                        ${Sinergizado(item)}
-                        </div>
-                    <div class="flip-card-back ${item.Categoria}">
-                        <h3>${item.Nombre}</h3>
-                        ${truncateDescription(item.Descripcion, 10, item)}
-
-                       <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
-                        <b>ODS:</b>  ${item.ODS} <br>
-                         <b>Categoría:</b>  ${item.Categoria}
-                       ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
-                        <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
-                    </div>
-                </div>
-            `;
-                    resultadoDiv.appendChild(card);
-                });
-
-                // Cambiar la clase "activo" del botón seleccionado
-                var botones = document.querySelectorAll(".botones-categorias button");
-                if (categoria == "web") {
-                    id = "Web";
-                }
-                if (categoria == "Servicio") {
-                    id = "servicio";
-                }
-                if (categoria == "App") {
-                    id = "App";
-                }
-                if (categoria == "Bien tangible") {
-                    id = "bien-tangible";
-                }
-
-                botones.forEach(function (boton) {
-                    boton.classList.remove("button-" + boton.id);
-                    boton.classList.remove("Todos");
-                    boton.classList.remove("SinergizadoC");
-                });
-                // Agrega la clase correspondiente al botón clicleado
-                document.getElementById(id).classList.add("button-" + id);
-            } else {
-                resultadoDiv.innerHTML =
-                    "<p>No hay datos disponibles para esta categoría.</p>";
-            }
-        }
-
-        // Función para mostrar Sinergizados
-        function mostrarSin() {
-            var resultadoDiv = document.getElementById("resultado");
-            console.log(resultadoDiv);
-            resultadoDiv.innerHTML = ""; // Limpiar contenido anterior
-
-            // Filtrar datos por sinergizado
-            var sinergizzados = datos.filter(function (item) {
-                return item.sinergizado == "TRUE";
-            });
-
-            if (sinergizzados.length > 0) {
-                sinergizzados.forEach(function (item) {
-                    var card = document.createElement("div");
-                    card.classList.add("flip-card");
-
-                    card.innerHTML = `
-                <div class="flip-card-inner">
-                    <div class="flip-card-front SinergizadoC">
-                        <div >
-                            <img src="https://campus.ort.edu.ar/static/tmp/jquery-file-upload/thumbnail/${item.id
-                        }.png"  alt="Avatar">
-                        </div>
-                        <h3>${item.Nombre}</h3>
-                        <p>${item.Slogan.slice(0, 80)}</p>
-                        <button class="girar-button" onclick="girarTarjeta(this)">+ Detalles</button>
-                        ${Sinergizado(item)}
-                        </div>
-                    <div class="flip-card-back ${item.Categoria}">
-                        <h3>${item.Nombre}</h3>
-                        ${truncateDescription(item.Descripcion, 10, item)}
-
-                       <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
-                        <b>ODS:</b>  ${item.ODS}
-                         ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
-                        <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
-                    </div>
-                </div>
-            `;
-                    resultadoDiv.appendChild(card);
-                });
-
-                var botones = document.querySelectorAll(".botones-categorias button");
-
-                id = "SinergizadosC";
-
-                botones.forEach(function (boton) {
-                    boton.classList.remove("Todos");
-                    boton.classList.remove("button-Servicio");
-                    boton.classList.remove("button-web");
-                    boton.classList.remove("button-App");
-                    boton.classList.remove("button-bien-tangible");
-
-                    if (boton.id == "Sinergizado") {
-                        boton.classList.add("SinergizadoC");
-                    }
-                });
-            }
-        }
-
-        // Función para mostrar todos los proyectos
-        function mostrarTodos() {
-            var botones = document.querySelectorAll(".botones-categorias button");
-            botones.forEach(function (boton) {
-                boton.className = "button-55";
-            });
-            var botonSeleccionado = document.getElementById("Todos");
-            if (botonSeleccionado) {
-                botonSeleccionado.classList.add("Todos");
-            }
-            var resultadoDiv = document.getElementById("resultado");
-            resultadoDiv.innerHTML = ""; // Limpiar contenido anterior
-
-            datos.forEach(function (item) {
-                var card = document.createElement("div");
-                var card = document.createElement("div");
-                card.classList.add("flip-card");
-                card.innerHTML = `
-                <div class="flip-card-inner ${item.Categoria}">
-                        <div class="flip-card-front">
-                            <div >
-                              <img src="https://campus.ort.edu.ar/static/tmp/jquery-file-upload/thumbnail/${item.id
-                    }.png"  alt="Avatar">
-                            </div>
-                        <h3>${item.Nombre}</h3>
-                        <p>${item.Slogan.slice(0, 80)}</p>
-                        <button class="girar-button" onclick="girarTarjeta(this)">+ Detalles</button>
-                        ${Sinergizado(item)}
-                        </div>
-                        <div class="flip-card-back .flip-card ${item.Categoria}">
-                                <h3>${item.Nombre}</h3>
-                                   ${truncateDescription(item.Descripcion, 10, item)}
-                                    <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
-                                      <b>ODS:</b>  ${item.ODS} <br>
-                                    <b>Categoría:</b>  ${item.Categoria}<br> 
-                                    ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
-                                    
-                    </p>
-                              
-                                <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
-                        </div>
-                        
-                    </div>
-                `;
-                resultadoDiv.appendChild(card);
-            });
-        }
-
-        //// truncar descripciones
-        function truncateDescription(description, wordCount, item) {
-            if (description.length > 100) {
-                const words = description.split(" ");
-                if (words.length <= wordCount) {
-                    return `<pid="descCard"><b>Descripción:</b> ${description}</p><br>`;
-                }
-                let truncatedWords = words.slice(0, wordCount);
-                truncatedWords = truncatedWords.join(" ");
-
-                return `<p onclick="mostrarDescripcionCompleta('${description}')" title="leer +" id="descCard"><b>Descripción:</b> ${truncatedWords} ...(+)</p>
-        
-        `;
-                //   return `<p>${truncatedWords}  ...</p><button class="leer-mas-button" onclick="mostrarDescripcionCompleta('${description}')">Leer más</button>
-            } else {
-                return `<p id="descCard"><b>Descripción:</b> ${description}</p><br>`;
-            }
-        }
-
-        function truncateData(tipoProduccion, char, cantidad, txt) {
-            const words = tipoProduccion.split(char);
-            //const truncatedWord = [words[0], words[1]] ; // Truncamos y quitamos posibles espacios en blanco
-
-            if (words.length >= 2) {
-                // Si no hay un guion, mostramos solo la primera palabra
-                return `<b onclick="mostrarDescripcionCompleta('${tipoProduccion}')">${txt}:</b> ${words[0]}, ${words[1]}</p>`;
-            } else {
-                return `<b>${txt}:</b> ${tipoProduccion} </p>`;
-            }
-        }
-
-        // Crea el modal cuando se carga la página
-
-        var modal = document.createElement("div");
-        modal.className = "modal";
-        modal.style.display = "none"; // Inicialmente oculto
-
-        var modalContent = document.createElement("div");
-        modalContent.className = "modal-content";
-
-        var closeButton = document.createElement("span");
-        closeButton.className = "close";
-        closeButton.innerHTML = "&times;";
-
-        var modalParagraph = document.createElement("p");
-        modalParagraph.id = "modalParagraph";
-
-        modalContent.appendChild(closeButton);
-        modalContent.appendChild(modalParagraph);
-        modal.appendChild(modalContent);
-
-        document.body.appendChild(modal);
-
-        // Función para mostrar el modal con una descripción específica
-
-        // Función para cerrar el modal
-        closeButton.onclick = function () {
-            modal.style.display = "none";
-        };
-
-        // Cierra el modal si el usuario hace clic fuera de él
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        };
-
-        function mostrarDescripcionCompleta(descripcion) {
-            modal.style.display = "block";
-            modal.style.alignItems = "center";
-            modal.style.display = "flex";
-            modal.style.justifyContent = "center";
-            modalParagraph.textContent = descripcion;
-        }
-
-        /**** fin modal****/
-
-        // Mostrar ico sinergizados
-        function Sinergizado(item) {
-            if (item.Sinergizado == "TRUE") {
-                return `<div class="syn-image" title="Sinergizado"></div>`;
-            } else {
-                return "";
-            }
-        }
-        //buscar con el input
-        const buscador = document.getElementById("buscador");
-
-        buscador.addEventListener("input", function () {
-            var botones = document.querySelectorAll(".botones-categorias button");
-            botones.forEach(function (boton) {
-                boton.className = "button-55";
-            });
-
-            const terminoBusqueda = buscador.value.trim().toLowerCase();
-            filtrarProyectos(terminoBusqueda);
-            buscador.addEventListener("blur", function () {
-                buscador.value = "";
-            });
-        });
-
-        function filtrarProyectos(termino) {
-            const resultadoDiv = document.getElementById("resultado");
-            resultadoDiv.innerHTML = "";
-
-            const proyectosFiltrados = datos.filter(function (proyecto) {
-                const titulo = proyecto.Nombre.toLowerCase();
-                const descripcion = proyecto.Descripcion.toLowerCase();
-                const integrantes = proyecto.Integrantes.toLowerCase();
-                return (
-                    titulo.includes(termino) ||
-                    descripcion.includes(termino) ||
-                    integrantes.includes(termino)
-                );
-            });
-
-            if (proyectosFiltrados.length > 0) {
-                proyectosFiltrados.forEach(function (item) {
-                    var card = document.createElement("div");
-                    card.classList.add("flip-card");
-                    card.innerHTML = `
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front ${item.Categoria}">
-                            <div>
-                              <img src="https://campus.ort.edu.ar/static/tmp/jquery-file-upload/thumbnail/${item.Id
-                        }.png"  alt="Avatar">
-                            </div>
-                        <h3>${item.Nombre}</h3>
-                        <p>${item.Slogan.slice(0, 80)}</p>
-                        <button class="girar-button" onclick="girarTarjeta(this)">+ Detalles</button>
-                        ${Sinergizado(item)}
-                        </div>
-                        <div class="flip-card-back ${item.Categoria}">
-                            <h3>${item.Nombre}</h3>
-                              ${truncateDescription(item.Descripcion, 10, item)}
-                            ${truncateData(item.Integrantes, ',', 2, 'Integrantes')}<br>
-                             
-                            <b>Categoria:</b> ${item.Categoria}</p>
-                            <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
-                        </div>
-                    </div>
-                `;
-                    resultadoDiv.appendChild(card);
-                });
-            } else {
-                resultadoDiv.innerHTML = "<p>No se encontraron proyectos.</p>";
-            }
-        }
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-            });
-        }
-        window.addEventListener("scroll", function () {
-            var scrollToTopButton = document.getElementById("scrollToTopButton");
-
-            if (window.scrollY > 300) {
-                scrollToTopButton.style.display = "block";
-            } else {
-                scrollToTopButton.style.display = "none";
-            }
-        });
-
-        (function (h, o, t, j, a, r) {
-            h.hj =
-                h.hj ||
-                function () {
-                    (h.hj.q = h.hj.q || []).push(arguments);
-                };
-            h._hjSettings = { hjid: 3697742, hjsv: 6 };
-            a = o.getElementsByTagName("head")[0];
-            r = o.createElement("script");
-            r.async = 1;
-            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
     </script>
 </body>
 
