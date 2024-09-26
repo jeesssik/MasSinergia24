@@ -4403,7 +4403,6 @@
         // Función para mostrar datos de una categoría
 
         function mostrarCategoria(categoria) {
-            //console.log(categoria)
             var resultadoDiv = document.getElementById("resultado");
 
             resultadoDiv.innerHTML = ""; // Limpiar contenido anterior
@@ -4433,7 +4432,7 @@
                         ${truncateDescription(item.Descripcion, 10, item)}
 
                        <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
-                        <br ><b>ODS:</b>  ${item.ODS} <br>
+                        <b>ODS:</b>  ${item.ODS} <br>
                          <b>Categoría:</b>  ${item.Categoria}
                        ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
                         <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
@@ -4503,7 +4502,7 @@
                         <h3>${item.Nombre}</h3>
                         ${truncateDescription(item.Descripcion, 10, item)}
 
-                       <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}<br>
+                       <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
                         <b>ODS:</b>  ${item.ODS}
                          ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
                         <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
@@ -4564,7 +4563,7 @@
                                 <h3>${item.Nombre}</h3>
                                    ${truncateDescription(item.Descripcion, 10, item)}
                                     <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
-                                      <br ><b>ODS:</b>  ${item.ODS} <br>
+                                      <b>ODS:</b>  ${item.ODS} <br>
                                     <b>Categoría:</b>  ${item.Categoria}<br> 
                                     ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
                                     
