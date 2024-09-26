@@ -4432,10 +4432,10 @@
                         <h3>${item.Nombre}</h3>
                         ${truncateDescription(item.Descripcion, 10, item)}
 
-                       <p >${truncateData(item.Integrantes,',',2,'Integrantes')}
+                       <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
                         <br ><b>ODS:</b>  ${item.ODS} <br>
                          <b>Categoría:</b>  ${item.Categoria}
-                       ${truncateData(item.superTags,'-',0,'Tipo de Producción')}</p>
+                       ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
                         <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
                     </div>
                 </div>
@@ -4503,9 +4503,9 @@
                         <h3>${item.Nombre}</h3>
                         ${truncateDescription(item.Descripcion, 10, item)}
 
-                       <p >${truncateData(item.Integrantes,',',2,'Integrantes')}<br>
+                       <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}<br>
                         <b>ODS:</b>  ${item.ODS}
-                         ${truncateData(item.superTags,'-',0,'Tipo de Producción')}</p>
+                         ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
                         <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
                     </div>
                 </div>
@@ -4562,11 +4562,11 @@
                         </div>
                         <div class="flip-card-back .flip-card ${item.Categoria}">
                                 <h3>${item.Nombre}</h3>
-                                   ${truncateDescription(item.Descripcion,10, item)}
-                                    <p >${truncateData(item.Integrantes,',',2,'Integrantes')}
+                                   ${truncateDescription(item.Descripcion, 10, item)}
+                                    <p >${truncateData(item.Integrantes, ',', 2, 'Integrantes')}
                                       <br ><b>ODS:</b>  ${item.ODS} <br>
                                     <b>Categoría:</b>  ${item.Categoria}<br> 
-                                    ${truncateData(item.superTags,'-',0,'Tipo de Producción')}</p>
+                                    ${truncateData(item.superTags, '-', 0, 'Tipo de Producción')}</p>
                                     
                     </p>
                               
@@ -4599,16 +4599,16 @@
         }
 
         function truncateData(tipoProduccion, char, cantidad, txt) {
-  const words = tipoProduccion.split(char);
-  const truncatedWord = [words[0], words[1]]; // Truncamos y quitamos posibles espacios en blanco
-  
-  if (words.length >=1) {
-    // Si no hay un guion, mostramos solo la primera palabra
-    return `<b onclick="mostrarDescripcionCompleta('${tipoProduccion}')">${txt}:</b> ${truncatedWord}</p>`;
-  } else  {
-    return `<b>${txt}:</b> ${tipoProduccion} </p>`;
-  }
-}
+            const words = tipoProduccion.split(char);
+            //const truncatedWord = [words[0], words[1]] ; // Truncamos y quitamos posibles espacios en blanco
+
+            if (words.length >= 2) {
+                // Si no hay un guion, mostramos solo la primera palabra
+                return `<b onclick="mostrarDescripcionCompleta('${tipoProduccion}')">${txt}:</b> ${words[0]}, ${words[1]}</p>`;
+            } else {
+                return `<b>${txt}:</b> ${tipoProduccion} </p>`;
+            }
+        }
 
         // Crea el modal cuando se carga la página
 
@@ -4714,7 +4714,7 @@
                         <div class="flip-card-back ${item.Categoria}">
                             <h3>${item.Nombre}</h3>
                               ${truncateDescription(item.Descripcion, 10, item)}
-                            ${truncateData(item.Integrantes,',',2,'Integrantes')}<br>
+                            ${truncateData(item.Integrantes, ',', 2, 'Integrantes')}<br>
                              
                             <b>Categoria:</b> ${item.Categoria}</p>
                             <button class="girar-button" onclick="girarTarjeta(this)">Volver</button>
